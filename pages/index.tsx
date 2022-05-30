@@ -1,8 +1,12 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { Character, GetCharacterResults } from '../types'
 
-const Home: NextPage = () => {
+
+const Home: NextPage<{characters: Character[] }> = ({ characters }) => {
+
+  
   return (
     <div>
       <Head>
@@ -11,13 +15,43 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className="text-red-800">Hello</h1>
-      </main>
+      {characters.map((item) => {
+        return (
+          <>
+          <p key={item.id}>{item.name}</p>
+          <Image src={item.image} alt={item.name} width="200" height="200" />
+          </>
+        )
+      })}
+
 
       
     </div>
   )
 }
 
+
+
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+  let res = await fetch('https://rickandmortyapi.com/api/character');
+    const {results}: GetCharacterResults = await res.json();
+
+  return {
+    props: {
+      characters: results,
+    }
+  }
+}
+
+
+// Create something rough that:
+// - fetches data
+// - uses the Image 
+// - Has a form
+// - has routing
+// - has dynamic routing
+// - uses server side props
+// - uses static props
