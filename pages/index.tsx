@@ -69,7 +69,7 @@ export async function getStaticProps() {
 
 const Home: NextPage = ({ posts }: any) => {
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Bloggy</title>
         <meta
