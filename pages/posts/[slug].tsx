@@ -41,7 +41,6 @@ const SLUGLIST = gql`
 
 export async function getStaticPaths() {
   const { posts } = await graphcms.request(SLUGLIST);
-  console.log(posts)
   return {
     paths: posts.map((post: any) => ({ params: { slug: post.slug } })),
     fallback: false,
@@ -73,7 +72,6 @@ export default function BlogPost({ post }:any) {
           <img src={post.author.avatar.url} alt={post.author.name} />
           <div className={styles.authtext}>
             <h6>By {post.author.name} </h6>
-            
           </div>
         </div>
         <h2>{post.title}</h2>
